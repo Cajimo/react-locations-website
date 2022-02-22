@@ -9,6 +9,7 @@ import CaboSanLucasJPG from './../../assets/cabosanlucas.jpg';
 import CroatiaJPG from './../../assets/croatia.jpg';
 import GreeceJPG from './../../assets/greece.jpg';
 import AlbaniaJPG from './../../assets/albania.jpg';
+import { Link } from 'react-router-dom';
 
 const locationData = [
   { id: 1, location: 'Bora Bora', isFeatured: true, img: BoraBoraJPG },
@@ -17,18 +18,22 @@ const locationData = [
   { id: 4, location: 'Croatia', isFeatured: true, img: CroatiaJPG },
   { id: 5, location: 'Greece', isFeatured: true, img: GreeceJPG },
   { id: 6, location: 'Albania', isFeatured: true, img: AlbaniaJPG },
+  { id: 7, location: 'Bora Bora', isFeatured: true, img: BoraBoraJPG },
+  { id: 8, location: 'Maldives', isFeatured: true, img: MaldivesJPG },
+  { id: 9, location: 'Cabo San Lucas', isFeatured: true, img: CaboSanLucasJPG },
 ];
 
-const Locations = () => {
+const Locations = ({ page }) => {
+  const mapData = !page ? locationData.slice(0, 6) : locationData;
   return (
     <div className={classes.container}>
-      <div className={classes.locations}>
+      <div className={`${classes.locations} ${page ? classes.page : ''}`}>
         <div className={classes.locations__content}>
           <h2 className={classes.locations__content__title}>
             Discover a Tropic
           </h2>
           <div className={classes.locations__content__gallery}>
-            {locationData.map(({ id, location, isFeatured, img }) => (
+            {mapData.map(({ id, location, isFeatured, img }) => (
               <div key={id} className={classes.gallery__item}>
                 <img
                   src={img}
@@ -48,11 +53,13 @@ const Locations = () => {
               </div>
             ))}
           </div>
-          <div className={classes.locations__content__viewmore}>
-            <a href="/">
-              View More <BsArrowRight />
-            </a>
-          </div>
+          {!page && (
+            <div className={classes.locations__content__viewmore}>
+              <Link to="/locations">
+                View More <BsArrowRight />
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>
